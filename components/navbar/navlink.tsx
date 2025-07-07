@@ -4,9 +4,11 @@ import { useState } from "react";
 import { IoClose, IoMenu } from "react-icons/io5";
 import clsx from "clsx";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 const NavLink = () => {
     const [open, setOpen] = useState(false);
+    const { data: session } = useSession()
 
     return (
         <>
@@ -55,30 +57,34 @@ const NavLink = () => {
                             Contact
                         </Link>
                     </li>
-                    <li>
-                        <Link
-                            href="/myreservation"
-                            className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
-                        >
-                            My Reservation
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/admin/dashboard"
-                            className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
-                        >
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/admin/room"
-                            className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
-                        >
-                            Manage Room
-                        </Link>
-                    </li>
+                    {session && (
+                        <>
+                            <li>
+                                <Link
+                                    href="/myreservation"
+                                    className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
+                                >
+                                    My Reservation
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/admin/dashboard"
+                                    className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
+                                >
+                                    Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/admin/room"
+                                    className="block py-2 px-2 hover:bg-gray-100 rounded-sm md:hover:bg-transparent md:p-0"
+                                >
+                                    Manage Room
+                                </Link>
+                            </li>
+                        </>
+                    )}
                     <li className="pt-2 md:pt-0">
                         <Link
                             href="/signin"

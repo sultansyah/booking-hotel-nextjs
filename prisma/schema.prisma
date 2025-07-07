@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma"
 }
 
 datasource db {
@@ -41,6 +40,7 @@ model Amenities {
 
 model RoomAmenities {
   id     String @id @default(cuid())
+  
   roomId String
   Room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
