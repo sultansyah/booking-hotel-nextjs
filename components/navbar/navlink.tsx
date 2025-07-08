@@ -5,22 +5,35 @@ import { IoClose, IoMenu } from "react-icons/io5";
 import clsx from "clsx";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import Image from 'next/image';
+import Image from "next/image";
 
 const NavLink = () => {
     const [open, setOpen] = useState(false);
-    const { data: session } = useSession()
+    const { data: session } = useSession();
 
     return (
         <>
-        {session?.user ? (
-            <div className="flex items-center justify-end md:order-2">
-                <div className="hidden text-sm bg-gray-50 border rounded-full md:me-0 md:block focus:ring-4 focus:ring-gray-300">
-                    <Image src={session.user.image || "/avatar.svg"} width={64} height={64} alt="avatar" />
-
+            {session?.user ? (
+                <div className="flex items-center justify-end md:order-2">
+                    <div className="hidden text-sm bg-gray-50 border rounded-full md:me-0 md:block focus:ring-4 focus:ring-gray-300">
+                        <Image
+                            className="size-8 rounded-full"
+                            src={session.user.image || "/avatar.svg"}
+                            width={64}
+                            height={64}
+                            alt="avatar"
+                        />
+                    </div>
+                    <div className="flex items-center">
+                        <button
+                            onClick={() => signOut()}
+                            className="md:block hidden py-2 px-4 bg-gray-50 text-gray-700 hover:bg-gray-100 rounded-sm cursor-pointer"
+                        >
+                            Sign Out
+                        </button>
+                    </div>
                 </div>
-            </div>
-        ):null}
+            ) : null}
             <button
                 onClick={() => setOpen(!open)}
                 className="inline-flex items-center p-2 justify-center text-sm text-gray-500 rounded-md md:hidden hover:bg-gray-100"
@@ -101,7 +114,7 @@ const NavLink = () => {
                     {session ? (
                         <li className="pt-2 md:pt-0">
                             <button
-                            onClick={() => signOut()}
+                                onClick={() => signOut()}
                                 className="md:hidden py-2.5 px-4 bg-red-400 text-white hover:bg-red-600 rounded-sm cursor-pointer"
                             >
                                 Sign Out
